@@ -1,5 +1,8 @@
+require 'securerandom'
+
 class PicturesController < ApplicationController
   before_action :set_picture, only: [:show, :edit, :update, :destroy]
+  skip_before_filter :verify_authenticity_token
 
   # GET /pictures
   # GET /pictures.json
@@ -21,10 +24,42 @@ class PicturesController < ApplicationController
   def edit
   end
 
+  def raw
+    pic = Picture.find params[:id]
+    if pic
+      send_data pic.data
+    else
+      # pic does not exist or is no longer viewable.
+      nil
+    end
+  end
+
+  def snap
+
+  end
+
+  def create
+    @picture = Picture.create(uid: SecureRandom.urlsafe_base64,
+                          data: params[:picture].read)
+
+    respond_to do |format|
+      if @picture.save
+        format.html { redirect_to @picture, notice: 'Picture was successfully created.' }
+        format.json { render :show, status: :created, location: @picture }
+      else
+        format.html { render :new }
+        format.json { render json: @picture.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   # POST /pictures
   # POST /pictures.json
-  def create
-    @picture = Picture.new(picture_params)
+  def insert
+    data = params[:datab64]
+    image_data = Base64.decode64(data['data:image/jpeg;base64,'.length .. -1])
+    @picture = Picture.create(uid: SecureRandom.urlsafe_base64,
+                              data: image_data)
 
     respond_to do |format|
       if @picture.save
@@ -62,13 +97,13 @@ class PicturesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_picture
-      @picture = Picture.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_picture
+    @picture = Picture.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def picture_params
-      params.require(:picture).permit(:uid, :data)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def picture_params
+    params.require(:picture).permit(:uid, :datab64)
+  end
 end

@@ -5,10 +5,8 @@
   <%= @picture.uid %>
 </p>
 
-<p>
-  <strong>Data:</strong>
-  <%= @picture.data %>
-</p>
+<%= raw "<img id=\"pic\" alt=\"Picture\" src=\"/pictures/#{@picture.id}/raw\">" %>
+
 
 <%= link_to 'Edit', edit_picture_path(@picture) %> |
 <%= link_to 'Back', pictures_path %>

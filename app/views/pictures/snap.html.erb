@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta charset="UTF-8">
+  <title></title>
+</head>
+<body>
+<video autoplay>No Video</video>
+<img src="">
+<canvas style="display:none"></canvas>
+<button id="stopButton" type="button">Stop</button>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script>
+    $(function () {
+        var errorCallback = function (e) {
+            console.log('Reeeejected!', e);
+        };
+        navigator.getUserMedia = navigator.getUserMedia ||
+                navigator.webkitGetUserMedia ||
+                navigator.mozGetUserMedia ||
+                navigator.msGetUserMedia;
+        var video = document.querySelector('video');
+        var stop = document.getElementById('stopButton');
+        var canvas = document.querySelector('canvas');
+        var ctx = canvas.getContext('2d');
+        var localMediaStream = null;
+
+        function snapshot() {
+            if (localMediaStream) {
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+                ctx.drawImage(video, 0, 0);
+                // "image/webp" works in Chrome.
+                // Other browsers will fall back to image/png.
+
+                var dataURL = canvas.toDataURL('image/jpeg');
+                document.querySelector('img').src = dataURL;
+                $.ajax({
+                    type: "POST",
+                    url: "/pictures/insert.json",
+                    data: {
+                        datab64: dataURL
+                    }
+                }).done(function (o) {
+                    console.log('saved');
+                    // If you want the file to be visible in the browser
+                    // - please modify the callback in javascript. All you
+                    // need is to return the url to the file, you just saved
+                    // and than put the image in your browser.
+                });
+            }
+        }
+
+        video.addEventListener('click', snapshot, false);
+
+        stop.addEventListener('click', function () {
+            video.src = null;
+        }, false);
+
+        var videoConfig = {
+            video: true
+        };
+
+        if (navigator.getUserMedia) {
+            navigator.getUserMedia(videoConfig, function (stream) {
+                video.src = window.URL.createObjectURL(stream);
+                localMediaStream = stream;
+            }, errorCallback);
+        }
+    });
+</script>
+</body>
+</html>
