@@ -12,14 +12,22 @@
     <h4>The current time is <%= Time.now.strftime("%H:%M:%S") %></h4>
   </section>
 
-  <ul class="list-inline">
-    <% @pictures.each do |picture| %>
-        <li class="crop">
-          <%= raw "<img id=\"pic\" alt=\"Picture\" src=\"/pictures/#{picture.id}/raw\">" %>
-          <p><%= picture.created_at.localtime.strftime("%H:%M:%S") %></p>
-        </li>
+  <section class="well">
+    <% if @pictures.empty? %>
+        <p style="color: red" class="lead">No Cameras Detected</p>
+
+        <p>To use your phone as a camera, point your mobile browser to <a href="http://coffeeczar.herokuapp.com/pictures/snap">http://coffeeczar.herokuapp.com/pictures/snap</a></p>
+    <% else %>
+        <ul class="list-inline">
+          <% @pictures.each do |picture| %>
+              <li class="crop">
+                <%= raw "<img id=\"pic\" alt=\"Picture\" src=\"/pictures/#{picture.id}/raw\">" %>
+                <p><%= picture.created_at.localtime.strftime("%H:%M:%S") %></p>
+              </li>
+          <% end %>
+        </ul>
     <% end %>
-  </ul>
+  </section>
 
 
 </div>
