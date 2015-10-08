@@ -5,11 +5,27 @@
   <title></title>
 </head>
 <body>
-<video autoplay>No Video</video>
-<img src="">
-<canvas style="display:none"></canvas>
-<button id="stopButton" type="button">Stop</button>
+<header>
+  <div class="container">
+    <section class="well">
+      <h1>Camera Activated</h1>
 
+      <p>Warning: as long as you stay on this page, your device will take a picture every 10 seconds and send it to the
+        Coffee Czar</p>
+
+      <p style="color: red">You may incur data charges and/or experience significant battery drain</p>
+    </section>
+  </div>
+</header>
+<main>
+  <div class="container">
+    <section class="well">
+      <video autoplay>No Video</video>
+      <img src="">
+      <canvas style="display:none"></canvas>
+    </section>
+  </div>
+</main>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script>
     $(function () {
@@ -21,7 +37,6 @@
                 navigator.mozGetUserMedia ||
                 navigator.msGetUserMedia;
         var video = document.querySelector('video');
-        var stop = document.getElementById('stopButton');
         var canvas = document.querySelector('canvas');
         var ctx = canvas.getContext('2d');
         var localMediaStream = null;
@@ -53,10 +68,6 @@
         }
 
         video.addEventListener('click', snapshot, false);
-
-        stop.addEventListener('click', function () {
-            video.src = null;
-        }, false);
 
         var videoConfig = {
             video: true
