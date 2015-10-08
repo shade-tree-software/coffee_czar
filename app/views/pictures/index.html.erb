@@ -9,7 +9,7 @@
 
   <section class="well">
     <h4>Today is <%= Time.now.strftime("%A %B %d, %Y") %></h4>
-    <h4>The current time is <%= Time.now.strftime("%H:%M:%S") %></h4>
+    <h4>The current time is <%= Time.now.strftime("%H:%M:%S (%Z)") %></h4>
   </section>
 
   <% if @pictures.empty? || (@pictures.first.created_at < (Time.now.utc - 1.minute)) %>
@@ -23,14 +23,14 @@
 
   <% unless @pictures.empty? %>
       <section class="well">
-        <% if (@pictures.first.created_at < (Time.now.utc - 1.minute)) %>
+        <% if @pictures.first.created_at < (Time.now.utc - 1.minute) %>
             <h4>Recent Pictures:</h4>
         <% end %>
         <ul class="list-inline">
           <% @pictures.each do |picture| %>
               <li class="crop">
                 <%= raw "<img id=\"pic\" alt=\"Picture\" src=\"/pictures/#{picture.id}/raw\">" %>
-                <p><%= picture.created_at.localtime.strftime("%H:%M:%S") %></p>
+                <p><%= picture.created_at.localtime.strftime("%H:%M:%S (%Z)") %></p>
               </li>
           <% end %>
         </ul>
