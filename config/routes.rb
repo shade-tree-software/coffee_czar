@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  root 'pictures#index'
+
   resources :pictures do
     member do
       get 'raw'
