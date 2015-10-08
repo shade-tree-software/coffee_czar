@@ -12,12 +12,20 @@
     <h4>The current time is <%= Time.now.strftime("%H:%M:%S") %></h4>
   </section>
 
-  <section class="well">
-    <% if @pictures.empty? %>
+  <% if @pictures.empty? || (@pictures.first.created_at < (Time.now.utc - 1.minute)) %>
+      <section class="well">
         <p style="color: red" class="lead">No Cameras Detected</p>
 
-        <p>To use your phone as a camera, point your mobile browser to <a href="http://coffeeczar.herokuapp.com/pictures/snap">http://coffeeczar.herokuapp.com/pictures/snap</a></p>
-    <% else %>
+        <p>To use your phone as a camera, point your mobile browser to
+          <a href="http://coffeeczar.herokuapp.com/pictures/snap">http://coffeeczar.herokuapp.com/pictures/snap</a></p>
+      </section>
+  <% end %>
+
+  <% unless @pictures.empty? %>
+      <section class="well">
+        <% if (@pictures.first.created_at < (Time.now.utc - 1.minute)) %>
+            <h4>Recent Pictures:</h4>
+        <% end %>
         <ul class="list-inline">
           <% @pictures.each do |picture| %>
               <li class="crop">
@@ -26,8 +34,8 @@
               </li>
           <% end %>
         </ul>
-    <% end %>
-  </section>
+      </section>
+  <% end %>
 
 
 </div>
