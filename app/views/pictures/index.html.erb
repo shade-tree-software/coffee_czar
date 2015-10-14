@@ -41,7 +41,9 @@
     $(document).ready(function () {
         $(".fancybox").fancybox({type: "image"});
         setInterval(function () {
-            location.reload();
+            if ($(".fancybox-lock").size() < 1) {
+                location.reload();
+            }
         }, 10000);
     });
 </script>
