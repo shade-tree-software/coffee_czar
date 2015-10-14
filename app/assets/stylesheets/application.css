@@ -13,5 +13,8 @@
  *= require_tree .
  *= require_self
  *= require bootstrap.min
+ *= require jquery.fancybox
+ *= require jquery.fancybox-buttons
+ *= require jquery.fancybox-thumbs
  *= require main
  */

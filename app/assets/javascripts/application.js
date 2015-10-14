@@ -15,3 +15,7 @@
 //= require turbolinks
 //= require_tree .
 //= require bootstrap.min
+//= require jquery.fancybox.pack.js
+//= require jquery.fancybox-buttons.js
+//= require jquery.fancybox-media.js
+//= require jquery.fancybox-thumbs.js

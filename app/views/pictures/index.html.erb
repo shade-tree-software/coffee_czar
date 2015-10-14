@@ -29,7 +29,7 @@
         <ul class="list-inline">
           <% @pictures.each do |picture| %>
               <li class="crop">
-                <%= raw "<img id=\"pic\" alt=\"Picture\" src=\"/pictures/#{picture.id}/raw\">" %>
+                <%= raw "<a class=\"fancybox\" rel=\"group\" href=\"/pictures/#{picture.id}/raw\" alt=\"Picture\"><img id=\"pic\" alt=\"Picture\" src=\"/pictures/#{picture.id}/raw\"/></a>" %>
                 <p><%= picture.created_at.localtime.strftime("%H:%M:%S (%Z)") %></p>
               </li>
           <% end %>
@@ -39,3 +39,10 @@
 
 
 </div>
+
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(".fancybox").fancybox({type: "image"});
+    });
+</script>
