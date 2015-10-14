@@ -1,48 +1,54 @@
-<div class="container">
-  <header>
+<header>
+  <div class="container">
     <h1>The Coffee Czar</h1>
 
     <p class="lead">Who is too lazy to make the next pot?</p>
-  </header>
+  </div>
+</header>
 
-  <p id="notice"><%= notice %></p>
+<main>
+  <div class="container">
 
-  <section class="well">
-    <h4>Today is <%= Time.now.strftime("%A %B %d, %Y") %></h4>
-    <h4>The current time is <%= Time.now.strftime("%H:%M:%S (%Z)") %></h4>
-  </section>
+    <p id="notice"><%= notice %></p>
 
-  <% if @pictures.empty? || (@pictures.first.created_at < (Time.now.utc - 1.minute)) %>
-      <section class="well">
-        <p style="color: red" class="lead">No Cameras Detected</p>
+    <section class="well">
+      <h4>Today is <%= Time.now.strftime("%A %B %d, %Y") %></h4>
+      <h4>The current time is <%= Time.now.strftime("%H:%M:%S (%Z)") %></h4>
+    </section>
 
-        <p>To use your phone as a camera, point your mobile browser to
-          <a href="http://coffeeczar.herokuapp.com/pictures/snap">http://coffeeczar.herokuapp.com/pictures/snap</a></p>
-      </section>
-  <% end %>
+    <% if @pictures.empty? || (@pictures.first.created_at < (Time.now.utc - 1.minute)) %>
+        <section class="well nocamera">
+          <p style="color: red" class="lead">No Cameras Detected</p>
 
-  <% unless @pictures.empty? %>
-      <section class="well">
-        <% if @pictures.first.created_at < (Time.now.utc - 1.minute) %>
-            <h4>Recent Pictures:</h4>
-        <% end %>
-        <ul class="list-inline">
-          <% @pictures.each do |picture| %>
-              <li class="crop">
-                <%= raw "<a class=\"fancybox\" rel=\"group\" href=\"/pictures/#{picture.id}/raw\" alt=\"Picture\"><img id=\"pic\" alt=\"Picture\" src=\"/pictures/#{picture.id}/raw\"/></a>" %>
-                <p><%= picture.created_at.localtime.strftime("%H:%M:%S (%Z)") %></p>
-              </li>
+          <p>To use your phone as a camera, point your mobile browser to
+            <a href="http://coffeeczar.herokuapp.com/pictures/snap">http://coffeeczar.herokuapp.com/pictures/snap</a>
+          </p>
+        </section>
+    <% end %>
+
+    <% unless @pictures.empty? %>
+        <section class="well">
+          <% if @pictures.first.created_at < (Time.now.utc - 1.minute) %>
+              <h4>Recent Pictures:</h4>
           <% end %>
-        </ul>
-      </section>
-  <% end %>
-
-
-</div>
-
+          <ul class="list-inline">
+            <% @pictures.each do |picture| %>
+                <li class="crop">
+                  <%= raw "<a class=\"fancybox\" rel=\"group\" href=\"/pictures/#{picture.id}/raw\" alt=\"Picture\"><img id=\"pic\" alt=\"Picture\" src=\"/pictures/#{picture.id}/raw\"/></a>" %>
+                  <p><%= picture.created_at.localtime.strftime("%H:%M:%S (%Z)") %></p>
+                </li>
+            <% end %>
+          </ul>
+        </section>
+    <% end %>
+  </div>
+</main>
 
 <script type="text/javascript">
-    $(document).ready(function() {
+    $(document).ready(function () {
         $(".fancybox").fancybox({type: "image"});
+        setInterval(function () {
+            location.reload();
+        }, 10000);
     });
 </script>

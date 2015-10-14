@@ -1,4 +1,22 @@
+header, header h1, header p {
+    background-color: green;
+    color: white;
+}
+
+header {
+    margin-bottom: 15px;
+}
+
 .crop img {
     height: auto;
     width: 200px;
+}
+
+.well {
+    border: 1px solid green !important;
+    background-color: cornsilk !important;
+}
+
+.well.nocamera {
+    border-color: red;
 }
