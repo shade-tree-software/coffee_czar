@@ -9,13 +9,6 @@
 <main>
   <div class="container">
 
-    <p id="notice"><%= notice %></p>
-
-    <section class="well">
-      <h4>Today is <%= Time.now.strftime("%A %B %d, %Y") %></h4>
-      <h4>The current time is <%= Time.now.strftime("%H:%M:%S (%Z)") %></h4>
-    </section>
-
     <% if @pictures.empty? || (@pictures.first.created_at < (Time.now.utc - 1.minute)) %>
         <section class="well nocamera">
           <p style="color: red" class="lead">No Cameras Detected</p>
