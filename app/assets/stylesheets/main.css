@@ -20,3 +20,7 @@ header {
 .well.nocamera {
     border-color: red;
 }
+
+.nocamera a:hover {
+    background-color: transparent;
+}
