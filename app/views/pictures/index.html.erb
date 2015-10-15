@@ -19,21 +19,25 @@
         </section>
     <% end %>
 
-    <% unless @pictures.empty? %>
-        <section class="well">
-          <% if @pictures.first.created_at < (Time.now.utc - 1.minute) %>
-              <h4>Recent Pictures:</h4>
-          <% end %>
-          <ul class="list-inline">
+    <section class="well">
+      <% if !@pictures.empty? && @pictures.first.created_at < (Time.now.utc - 1.minute) %>
+          <h4>Recent Images:</h4>
+      <% end %>
+      <ul class="list-inline">
+        <% if @pictures.empty? %>
+            <li class="crop">
+              <a class="fancybox" rel="group" href="/pictures/0/raw" alt="Picture"><img id="pic" alt="Picture" src="/pictures/0/raw"/></a>
+            </li>
+        <% else %>
             <% @pictures.each do |picture| %>
                 <li class="crop">
                   <%= raw "<a class=\"fancybox\" rel=\"group\" href=\"/pictures/#{picture.id}/raw\" alt=\"Picture\"><img id=\"pic\" alt=\"Picture\" src=\"/pictures/#{picture.id}/raw\"/></a>" %>
                   <p><%= picture.created_at.localtime.strftime("%H:%M:%S (%Z)") %></p>
                 </li>
             <% end %>
-          </ul>
-        </section>
-    <% end %>
+        <% end %>
+      </ul>
+    </section>
   </div>
 </main>
 

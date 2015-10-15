@@ -26,12 +26,16 @@ class PicturesController < ApplicationController
   end
 
   def raw
-    pic = Picture.find params[:id]
-    if pic
-      send_data pic.data
+    if params[:id].to_i == 0
+      send_data(File.read Rails.root.join('app', 'assets', 'images', 'jackass.jpg'))
     else
-      # pic does not exist or is no longer viewable.
-      nil
+      pic = Picture.find params[:id]
+      if pic
+        send_data pic.data
+      else
+        # pic does not exist or is no longer viewable.
+        nil
+      end
     end
   end
 
@@ -41,7 +45,7 @@ class PicturesController < ApplicationController
 
   def create
     @picture = Picture.create(uid: SecureRandom.urlsafe_base64,
-                          data: params[:picture].read)
+                              data: params[:picture].read)
 
     respond_to do |format|
       if @picture.save
