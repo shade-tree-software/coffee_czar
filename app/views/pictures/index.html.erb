@@ -45,7 +45,7 @@
     $(document).ready(function () {
         $(".fancybox").fancybox({type: "image"});
         setInterval(function () {
-            if ($(".fancybox-lock").size() < 1 && window.scrollY === 0) {
+            if ($(".fancybox-lock").size() < 1 && window.scrollY < 150) {
                 location.reload();
             }
         }, 10000);
