@@ -11,10 +11,10 @@
 
     <% if @pictures.empty? || (@pictures.first.created_at < (Time.now.utc - 1.minute)) %>
         <section class="well nocamera">
-          <p style="color: red" class="lead">No Cameras Detected</p>
+          <p style="color: red" class="lead">No Active Cameras</p>
 
-          <p>To use your phone as a camera, point your mobile browser to
-            <a href="http://coffeeczar.herokuapp.com/pictures/snap">http://coffeeczar.herokuapp.com/pictures/snap</a>
+          <p>To use the camera on your phone or laptop, point your browser to
+            <a href="https://coffeeczar.herokuapp.com/pictures/snap">https://coffeeczar.herokuapp.com/pictures/snap</a>
           </p>
         </section>
     <% end %>
