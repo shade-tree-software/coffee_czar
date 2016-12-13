@@ -7,7 +7,7 @@ class PicturesController < ApplicationController
   # GET /pictures
   # GET /pictures.json
   def index
-    Picture.where(created_at: (Time.new(0)..(Time.now - 15.minutes))).delete_all
+    Picture.where(created_at: (Time.new(0)..(Time.now - 30.minutes))).delete_all
     @pictures = Picture.all.reverse_order
   end
 
